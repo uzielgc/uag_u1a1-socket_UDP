@@ -27,13 +27,15 @@ class RequestHandler(socketserver.BaseRequestHandler):
         data = self.request[0].decode(self.ENCODING).strip()
         socket = self.request[1]
 
-        # Creating a uuid for each client, this is just to review the class assigment.
+        # Creating a uuid for each client, this is just to review the class assigment (U1 A1: Socket UDP).
         c_uuid = self.CLIENTS.setdefault(self.client_address, str(uuid.uuid4()))
 
-        # UDPServer class internally calls recvfrom method to get data and client details.
+        # UDP Server class internally calls recvfrom method to read incoming data and client details.
         LOGGER.info("%s says: %s", c_uuid, data)
 
-        # Send data to the socket.
+        # Send data on socket.
+        # a socket serves as an endpoint for sending and receiving data across the network.
+        # At this point the client message was already logged.
         LOGGER.info("%s Sending response.", c_uuid)
         resp = self.SRV_RESP.format(c_uuid=c_uuid).encode(self.ENCODING)
         socket.sendto(resp, self.client_address)

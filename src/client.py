@@ -18,7 +18,7 @@ logging.basicConfig(level='INFO')
 LOGGER = logging.getLogger(__name__)
 
 if __name__ == '__main__':
-    """Conotrols workflow."""
+    """Control workflow."""
     LOGGER.info('Starting client...')
     LOGGER.info('Please write your message and press ENTER')
 
@@ -34,6 +34,8 @@ if __name__ == '__main__':
 
         # Sending data to server.
         client_socket.sendto(data, (REMOTE_IP, REMOTE_PORT))
+
+        # Data delivery is not guaranteed, trying to get a response from server (if any!).
         try:
             # Checking if server replied.
             resp = client_socket.recvfrom(BUFFER_SIZE)
